@@ -28,10 +28,9 @@ void BackExperiment(const vector<UNSINT>& buffer, ostream& ss);
 void RandomExperiment(const vector<UNSINT>& buffer, ostream& ss);
 void Print(const vector<UNSINT>& buffer);
 vector<unsigned> GeneratorVector(vector<double>& cache);
-inline void Heating (int* arr, int& h, const double& buffer);
+inline void Heating (int* arr, int& h,const double& buffer);
 
-const int TestNumber = 1000;
-const int StepSize = 16;
-const int Conv   = 262144;
+const int th = 1000;
+const int st = 16;
+const int conv = 262144;
 #endif // INCLUDE_HEADER_HPP_
-

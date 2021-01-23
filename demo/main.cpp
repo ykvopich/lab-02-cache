@@ -1,10 +1,11 @@
 //Copiright 2021 ykvopich <Kravchenko_vlad2001@bk.ru>
+
 #include <header.hpp>
 #include <random>
 //128Kb<1Mb<2Mb<4Mb<8Mb<9Mb
 
 inline void Heating (int* arr, int& h,const double& buffer) {
-  for (UNSINT i = 0; i < buffer; i += StepSize)
+  for (UNSINT i = 0; i < buffer; i += st)
     h = arr[i];
 }
 
@@ -34,7 +35,7 @@ vector<UNSINT> GeneratorVector(vector<double>& cache){
   cout << "}" << endl;
   vector<unsigned int> buffer(cache.size());
   for (double i = 0; i < cache.size(); ++i)
-    buffer[i] = cache[i] * Conv;
+    buffer[i] = cache[i] * conv;
   return  buffer;
 }
 
@@ -48,13 +49,14 @@ void StraightExperiment(const vector<UNSINT>& buffer, ostream& ss) {
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    for (int i = 0; i < TestNumber; ++i) {
-      for (UNSINT j = 0; j < buffer[z]; j += StepSize)
+    for (int hi = 0; hi < th; ++hi) {
+      for (UNSINT i = 0; i < buffer[z]; i += st)
         h = arr[i];
     }
+
     auto end = std::chrono::high_resolution_clock::now();
     ss << static_cast<int>(
-        std::chrono::nanoseconds((end - start) / TestNumber).count())
+        std::chrono::nanoseconds((end - start) / th).count())
        << " ns ";
     delete[] arr;
   }
@@ -70,14 +72,14 @@ void BackExperiment(const vector<UNSINT>& buffer, ostream& ss) {
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    for (int hi = 0; hi < TestNumber; ++hi) {
-      for (unsigned int i = buffer[z]; i > 0; i -= StepSize)
+    for (int hi = 0; hi < th; ++hi) {
+      for (unsigned int i = buffer[z]; i > 0; i -= st)
         h = arr[i];
     }
 
     auto end = std::chrono::high_resolution_clock::now();
     ss << static_cast<int>(
-        std::chrono::nanoseconds((end - start) / TestNumber).count())
+        std::chrono::nanoseconds((end - start) / th).count())
        << " ns ";
     delete[] arr;
   }
@@ -89,7 +91,7 @@ void RandomExperiment(const vector<UNSINT>& buffer, ostream& ss) {
     vector<int> size;
     vector<int>::iterator start, end;
 
-    for (UNSINT i = 0; i < buffer[z]; i += StepSize) size.emplace_back(i);
+    for (UNSINT i = 0; i < buffer[z]; i += st) size.emplace_back(i);
     start = size.begin();
     end = size.end();
     shuffle(start, end, std::mt19937(std::random_device()()));
@@ -100,15 +102,15 @@ void RandomExperiment(const vector<UNSINT>& buffer, ostream& ss) {
 
     auto startTime = std::chrono::high_resolution_clock::now();
 
-    for (int hi = 0; hi < TestNumber; ++hi) {
-      for (UNSINT i = 0; i < (buffer[z] / StepSize); ++i)
+    for (int hi = 0; hi < th; ++hi) {
+      for (UNSINT i = 0; i < (buffer[z] / st); ++i)
         h = arr[size[i]];
     }
 
     auto endTime = std::chrono::high_resolution_clock::now();
     string print;
     ss << static_cast<int>(
-        std::chrono::nanoseconds((endTime - startTime) / TestNumber).count())
+        std::chrono::nanoseconds((endTime - startTime) / th).count())
        << " ns ";
     delete[] arr;
   }
