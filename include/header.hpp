@@ -1,4 +1,4 @@
-// Copyright 2020 ykvopich <Kravchenko_vlad2001@bk.ru>
+// Copyright 2021 ykvopich <Kravchenko_vlad2001@bk.ru>
 
 #ifndef INCLUDE_HEADER_HPP_
 #define INCLUDE_HEADER_HPP_
