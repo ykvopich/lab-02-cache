@@ -26,8 +26,10 @@ using std::vector;
 void StraightExperiment(const vector<UNSINT>& buffer, ostream& ss);
 void BackExperiment(const vector<UNSINT>& buffer, ostream& ss);
 void RandomExperiment(const vector<UNSINT>& buffer, ostream& ss);
-void Print(const vector<UNSINT>& buffer);
+void Print(const vector<UNSINT>& buffer, const vector<double>& cache);
+void Print(const vector<double>& cache);
 vector<unsigned> GeneratorVector(vector<double>& cache);
+vector<double> GeneratorCache(vector<double>& cache);
 inline void Heating (int* arr, int& h,const double& buffer);
 
 const int th = 1000;

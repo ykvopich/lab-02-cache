@@ -12,7 +12,7 @@ inline void Heating (int* arr, int& h,const double& buffer) {
 int main() {
   vector<double> cache;
   vector<UNSINT> buffer = GeneratorVector(cache);
-  Print(buffer);
+  Print(buffer, cache);
 }
 
 vector<UNSINT> GeneratorVector(vector<double>& cache){
@@ -38,7 +38,21 @@ vector<UNSINT> GeneratorVector(vector<double>& cache){
     buffer[i] = cache[i] * conv;
   return  buffer;
 }
-
+vector<double> GeneratorCache(vector<double>& cache){
+  double sizeCacheMinMb = 0.125;  //Min cache Mb
+  double sizeCacheMaxMb = 9;  //Max cache Mb
+  cache.push_back(sizeCacheMinMb);
+  int j = 0;
+  int k = 0;
+  while (k < sizeCacheMaxMb) {
+    k = pow(2, j);
+    cache.push_back(k);
+    j++;
+  }
+  cache.pop_back();
+  cache.push_back(sizeCacheMaxMb);
+  return cache;
+}
 void StraightExperiment(const vector<UNSINT>& buffer, ostream& ss) {
   for (double z = 0; z < buffer.size(); ++z) {
     auto* arr = new int[buffer[z]];
@@ -115,35 +129,43 @@ void RandomExperiment(const vector<UNSINT>& buffer, ostream& ss) {
     delete[] arr;
   }
 }
-
-void Print(const vector<UNSINT>& buffer) {
+void Print(const vector<double>& cache){
+  vector<double> GeneratorCache(vector<double>& cache);
+  cout << "\n";
+  for (int i = 0; i < 6; ++i) {
+    cout << cache[i] << " mb ";
+  }
+cout <<"\n";
+}
+void Print(const vector<UNSINT>& buffer, const vector<double>& cache) {
   cout << R"(investigation:
     travel_variant: StraightExperiment
     experiments:
     number: 1
-    input_data:
-    buffer_size: 0.125Mb, 1Mb, 2Mb, 4Mb, 8Mb, 9Mb
-    results:
-    duration: )";
+    input_data: )";
+    cout << "\n buffer_size: ";
+    Print(cache);
+  cout << R"(results:
+    duration:)";
   StraightExperiment(buffer, cout);
   cout << endl
        << R"(investigation:
     travel_variant: BackExperiment
     experiments:
     number: 2
-    input_data:
-    buffer_size: 0.125Mb, 1Mb, 2Mb, 4Mb, 8Mb, 9Mb
-    results:
-    duration: )";
+    input_data: )";
+  Print(cache);
+  cout << R"(results:
+    duration:)";
   BackExperiment(buffer, cout);
   cout << endl
        << R"(investigation:
     travel_variant: RandomExperiment
     experiments:
     number: 3
-    input_data:
-    buffer_size: 0.125Mb, 1Mb, 2Mb, 4Mb, 8Mb, 9Mb
-    results:
-    duration: )";
+    input_data: )";
+  Print(cache);
+  cout << R"(results:
+    duration:)";
   RandomExperiment(buffer, cout);
 }
